@@ -22,13 +22,16 @@ struct TJogador
 void definir_mao(TJogador& jogador) {
 
 	char naipe;
+	
+	cout << "valores disponeiveis: 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 (Valete), 12 (Dama), 13 (Rei), 14 (Ás)." << endl;
+	cout << "Naipes disponiveis: d (Ouro), h (Copa), s (Espadas), c (Paus)" << endl << endl;
 
 	for (int i = 1; i < QNT_mao+1; i++)
 	{
 
 		cout << "Valor carta " << i << ": ";
 		cin >> jogador.mao[i-1].valor;
-		while (jogador.mao[i - 1].valor < 2 || jogador.mao[i - 1].valor > 10)
+		while (jogador.mao[i - 1].valor < 2 || jogador.mao[i - 1].valor > 14)
 		{
 			cout << "Valor invalido tente novamente, carta " << i << ": ";
 			cin >> jogador.mao[i - 1].valor;
@@ -56,7 +59,33 @@ void definir_mao(TJogador& jogador) {
 		default:
 			break;
 		}
-		system('cls')
+		cout << endl;
+	}
+
+}
+
+void mostrar_mao(TJogador jogador) {
+	for (int i = 0; i < QNT_mao; i++)
+	{
+		cout << jogador.mao[i].valor;
+		switch (jogador.mao[i].naipe)
+		{
+		case 1:
+			cout << "D" << "-";
+			break;
+		case 2:
+			cout << "H" << "-";
+			break;
+		case 3:
+			cout << "S" << "-";
+			break;
+		case 4:
+			cout << "C" << "-";
+			break;
+		default:
+			break;
+		}
+
 	}
 }
 
@@ -197,69 +226,55 @@ void definir_valor_da_mao(TJogador& jogador) {
 
 }
 
+void desempatar_valor(TJogador& jogador_1, TJogador& jogador_2){
+
+	if (jogador_1.maior_carta.valor > jogador_2.maior_carta.valor)
+	{
+		jogador_1.valor_mao++;
+	}
+	else if (jogador_1.maior_carta.valor < jogador_2.maior_carta.valor)
+	{
+		jogador_2.valor_mao++;
+	}
+	else
+	{
+		if (jogador_1.maior_carta.naipe > jogador_2.maior_carta.naipe) {
+			jogador_1.valor_mao++;
+		}
+		else
+		{
+			jogador_2.valor_mao++;
+		}
+	}
+
+}
+
 int main()
 {
 
 	TJogador jogador_1, jogador_2;
 
-	cout << "Definir mao do jogador 1: " << endl;
-	definir_mao(jogador1);
+	cout << " --- Definir mao do jogador 1 --- " << endl << endl;
+	definir_mao(jogador_1);
+	system("cls");
 
-	cout << "Definir mao do jogador 2: " << endl;
-	definir_mao(jogador2);
-		/*jogador_1.mao[0].naipe = 2;
-		jogador_1.mao[0].valor = 2;
-
-		jogador_1.mao[1].naipe = 4;
-		jogador_1.mao[1].valor = 2;
-
-		jogador_1.mao[2].naipe = 3;
-		jogador_1.mao[2].valor = 4;
-
-		jogador_1.mao[3].naipe = 4;
-		jogador_1.mao[3].valor = 6;
-
-		jogador_1.mao[4].naipe = 1;
-		jogador_1.mao[4].valor = 4;
-
-
-		jogador_2.mao[0].naipe = 3;
-		jogador_2.mao[0].valor = 2;
-
-		jogador_2.mao[1].naipe = 3;
-		jogador_2.mao[1].valor = 3;
-
-		jogador_2.mao[2].naipe = 3;
-		jogador_2.mao[2].valor = 4;
-
-		jogador_2.mao[3].naipe = 3;
-		jogador_2.mao[3].valor = 5;
-
-		jogador_2.mao[4].naipe = 3;
-		jogador_2.mao[4].valor = 6;*/
+	cout << "--- Definir mao do jogador 2 --- " << endl << endl;
+	definir_mao(jogador_2);
+	system("cls");
 
 	definir_valor_da_mao(jogador_1);
 	definir_valor_da_mao(jogador_2);
 
 	if (jogador_1.valor_mao == jogador_2.valor_mao) {
-		if (jogador_1.maior_carta.valor > jogador_2.maior_carta.valor)
-		{
-			jogador_1.valor_mao++;
-		}else if (jogador_1.maior_carta.valor < jogador_2.maior_carta.valor)
-		{
-			jogador_2.valor_mao++;
-		}
-		else
-		{
-			if (jogador_1.maior_carta.naipe > jogador_2.maior_carta.naipe) {
-				jogador_1.valor_mao++;
-			}
-			else
-			{
-				jogador_2.valor_mao++;
-			}
-		}
+		desempatar_valor(jogador_1, jogador_2);
 	}
+	
+	cout << "Jogador 1: ";
+	mostrar_mao(jogador_1);
+
+	cout << " // Jogador 2: ";
+	mostrar_mao(jogador_2);
+	cout << endl;
 
 	if (jogador_1.valor_mao > jogador_2.valor_mao) {
 		cout << "jogador 1 ganhou" << endl;
@@ -268,12 +283,6 @@ int main()
 	{
 		cout << "jogador 2 ganhou" << endl;
 	}
-
-	cout << "jogador 1 maior carta nipe: "<< jogador_1.maior_carta.naipe << endl;
-	cout << "jogador 1 maior carta valor: " << jogador_1.maior_carta.valor << endl;
-	cout << "jogador 2 maior carta nipe: " << jogador_2.maior_carta.naipe << endl;
-	cout << "jogador 2 maior carta valor: " << jogador_2.maior_carta.valor << endl;
-
 
 	return 0;
 }
