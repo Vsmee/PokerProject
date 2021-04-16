@@ -49,13 +49,17 @@ void definir_mao(TJogador& jogador) {
 		switch (naipe)
 		{
 		case 'd':
-			jogador.mao[i - 1].naipe = 0;
-		case 'h':
 			jogador.mao[i - 1].naipe = 1;
-		case 's':
+			break;
+		case 'h':
 			jogador.mao[i - 1].naipe = 2;
-		case 'c':
+			break;
+		case 's':
 			jogador.mao[i - 1].naipe = 3;
+			break;
+		case 'c':
+			jogador.mao[i - 1].naipe = 4;
+			break;
 		default:
 			break;
 		}
@@ -283,6 +287,5 @@ int main()
 	{
 		cout << "jogador 2 ganhou" << endl;
 	}
-
 	return 0;
 }
