@@ -95,33 +95,33 @@ void mostrar_mao(TJogador jogador) {
 
 void maior_carta_sequencial(TJogador& jogador) {
 
-	int sequencia;
-	int sequencia_max = 0;
+	int valores_iguais;
+	int valores_iguais_max = 0;
 	for (int i = 0; i < QNT_mao; i++)
 	{
-		sequencia = 0;
+		valores_iguais = 0;
 		for (int j = 0; j < QNT_mao; j++)
 		{
 			if (jogador.mao[i].valor == jogador.mao[j].valor) {
 
-				sequencia++;
+				valores_iguais++;
 
 			}
 
 		}
-		if (sequencia>= sequencia_max)
+		if (valores_iguais>= valores_iguais_max)
 		{
 			jogador.maior_carta = jogador.mao[i];
 		}
-		if (sequencia_max < sequencia) {
-			sequencia_max = sequencia;
+		if (valores_iguais_max < valores_iguais) {
+			valores_iguais_max = valores_iguais;
 		}
 	}
 }
 
 int varificar_valores_iguais(TJogador& jogador){
 	
-	int sequencia = 0;
+	int valores_iguais = 0;
 
 	for (int i = 0; i < QNT_mao; i++)
 	{
@@ -129,7 +129,7 @@ int varificar_valores_iguais(TJogador& jogador){
 		{
 			if (jogador.mao[i].valor == jogador.mao[j].valor) {
 				
-				sequencia++;
+				valores_iguais++;
 				
 			}
 
@@ -137,23 +137,23 @@ int varificar_valores_iguais(TJogador& jogador){
 	}
 	maior_carta_sequencial(jogador);
 	// formula da condicao: numero de cartas repetidas**2 + numero de cartas nao repetidas
-	if (sequencia == 17 || sequencia == 25) //4*4+1 = 17 ou 5*5 + 0 = 25
+	if (valores_iguais == 17 || valores_iguais == 25) //4*4+1 = 17 ou 5*5 + 0 = 25
 	{
 		return 9; // quadra
 	}
-	else if (sequencia == 13) // 3*3 + 2*2 + 0 = 13
+	else if (valores_iguais == 13) // 3*3 + 2*2 + 0 = 13
 	{
 		return 8; // full house
 	}
-	else if (sequencia == 11) // 3*3 + 2 = 11
+	else if (valores_iguais == 11) // 3*3 + 2 = 11
 	{
 		return 4; // trinca
 	}
-	else if (sequencia == 9) { // duas duplas = 2*2*2 + 1 = 9
+	else if (valores_iguais == 9) { // duas duplas = 2*2*2 + 1 = 9
 
 		return 3; // 2 pares
 	}
-	else if (sequencia == 7 || sequencia == 8+1) { // 2*2 + 3 = 7
+	else if (valores_iguais == 7 || valores_iguais == 8+1) { // 2*2 + 3 = 7
 
 		return 2; // par
 	}
