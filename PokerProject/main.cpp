@@ -8,7 +8,7 @@ struct TCarta {
 
 	int valor; // 2, 3, 4, 5, 6, 7, 8, 9, 10, Valete (11), Dama (12), Rei (13), Ás (14).
 
-	int naipe; // Ouro (D), Copa (H), Espadas (S), Paus (C)
+	int naipe; // 1-Ouro (D), 2-Copa (H), 3-Espadas (S), 4-Paus (C)
 
 };
 
@@ -28,9 +28,20 @@ void definir_mao(TJogador& jogador) {
 
 		cout << "Valor carta " << i << ": ";
 		cin >> jogador.mao[i-1].valor;
+		while (jogador.mao[i - 1].valor < 2 || jogador.mao[i - 1].valor > 10)
+		{
+			cout << "Valor invalido tente novamente, carta " << i << ": ";
+			cin >> jogador.mao[i - 1].valor;
+		}
 
 		cout << "Naipe carta " << i << ": ";
 		cin >> naipe;
+
+		while (naipe != 'd' && naipe != 'h' && naipe != 's' && naipe != 'c')
+		{
+			cout << "Naipe invalido tente novamente, carta " << i << ": ";
+			cin >> naipe;
+		}
 
 		switch (naipe)
 		{
@@ -45,10 +56,11 @@ void definir_mao(TJogador& jogador) {
 		default:
 			break;
 		}
+		system('cls')
 	}
 }
 
-void maior_carta_igual(TJogador& jogador) {
+void maior_carta_sequencial(TJogador& jogador) {
 
 	int sequencia;
 	int sequencia_max = 0;
@@ -90,8 +102,8 @@ int varificar_valores_iguais(TJogador& jogador){
 
 		}
 	}
-	maior_carta_igual(jogador);
-	// formula: numero de cartas repetidas**2 + numero de cartas nao repetidas
+	maior_carta_sequencial(jogador);
+	// formula da condicao: numero de cartas repetidas**2 + numero de cartas nao repetidas
 	if (sequencia == 17 || sequencia == 25) //4*4+1 = 17 ou 5*5 + 0 = 25
 	{
 		return 9; // quadra
@@ -161,21 +173,22 @@ void definir_valor_da_mao(TJogador& jogador) {
 
 	bubble_sort(jogador);
 
-	jogador.valor_mao = varificar_valores_iguais(jogador);
-	if (jogador.valor_mao < 6 && verificar_naipes_iguais(jogador) == true) {
+	jogador.valor_mao = varificar_valores_iguais(jogador); // Condicao para Sequencias
+
+	if (jogador.valor_mao < 6 && verificar_naipes_iguais(jogador) == true) { // Condicao para Flush
 		jogador.maior_carta = jogador.mao[4];
 		jogador.valor_mao = 6;
 	}
-	if (jogador.valor_mao < 5 && verificar_sequencia(jogador)== true) {
+	if (jogador.valor_mao < 5 && verificar_sequencia(jogador)== true) { // Condicao para Straight
 		jogador.maior_carta = jogador.mao[4];
 		jogador.valor_mao = 5;
 
 	}
-	if (verificar_sequencia(jogador) == true && verificar_naipes_iguais(jogador) == true)
+	if (verificar_sequencia(jogador) == true && verificar_naipes_iguais(jogador) == true) // Condicao para Straight Flush
 	{
 		jogador.maior_carta = jogador.mao[4];
 		jogador.valor_mao = 10;
-		if (jogador.mao[4].valor == 14)
+		if (jogador.mao[4].valor == 14) // Condicao para Royal Flush
 		{
 			jogador.valor_mao = 11;
 		}
@@ -189,12 +202,12 @@ int main()
 
 	TJogador jogador_1, jogador_2;
 
-	/*cout << "Definir mao do jogador 1: " << endl;
+	cout << "Definir mao do jogador 1: " << endl;
 	definir_mao(jogador1);
 
 	cout << "Definir mao do jogador 2: " << endl;
-	definir_mao(jogador2);*/
-		jogador_1.mao[0].naipe = 2;
+	definir_mao(jogador2);
+		/*jogador_1.mao[0].naipe = 2;
 		jogador_1.mao[0].valor = 2;
 
 		jogador_1.mao[1].naipe = 4;
@@ -223,7 +236,7 @@ int main()
 		jogador_2.mao[3].valor = 5;
 
 		jogador_2.mao[4].naipe = 3;
-		jogador_2.mao[4].valor = 6;
+		jogador_2.mao[4].valor = 6;*/
 
 	definir_valor_da_mao(jogador_1);
 	definir_valor_da_mao(jogador_2);
