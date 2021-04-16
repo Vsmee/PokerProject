@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const int QNT_mao = 5; // Quantidade de carta na mao de cada jogador
+const int QNT_mao = 5; // Quantidade de carta na mao de cada jogador 
 
 struct TCarta {
 
@@ -64,7 +64,7 @@ void maior_carta_igual(TJogador& jogador) {
 			}
 
 		}
-		if (sequencia> sequencia_max)
+		if (sequencia>= sequencia_max)
 		{
 			jogador.maior_carta = jogador.mao[i];
 		}
@@ -136,7 +136,7 @@ void bubble_sort(TJogador &jogador) {
 		TCarta temp;
 		for (int j = 0; j < QNT_mao - 1; j++)
 		{
-			if (jogador.mao[j].valor > jogador.mao[j + 1].valor || ((jogador.mao[j].valor == jogador.mao[j + 1].valor)&& (jogador.mao[j].naipe < jogador.mao[j + 1].naipe))) {
+			if (jogador.mao[j].valor > jogador.mao[j + 1].valor || ((jogador.mao[j].valor == jogador.mao[j + 1].valor)&& (jogador.mao[j].naipe > jogador.mao[j + 1].naipe))) {
 				temp = jogador.mao[j];
 				jogador.mao[j] = jogador.mao[j + 1];
 				jogador.mao[j + 1] = temp;
